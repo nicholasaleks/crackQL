@@ -2,6 +2,7 @@ import re
 import csv
 import textwrap
 import json
+from typing import Tuple
 
 try:
     import textwrap
@@ -11,22 +12,22 @@ except AttributeError:  # undefined function (wasn't added until Python 3.3)
         padding = amount * ch
         return ''.join(padding+line for line in text.splitlines(True))
 else:
-    def indent(text, amount, ch=' '):
+    def indent(text: str, amount, ch=' '):
         return textwrap.indent(text, amount * ch)
 
-def get_root_type(query_data):
+def get_root_type(query_data: str) -> str:
 	'''
 	Extracts the root operation type from the input query
 	'''
 	first = query_data.split('\n', 1)[0]
 	return first
 
-def get_operation(query_data):
+def get_operation(query_data: str) -> str:
 	first = query_data.split('\n', 1)[1]
 	last = first[:first.rfind('\n')]
 	return textwrap.dedent(last)
 
-def get_variable_type(query_data, variable):
+def get_variable_type(query_data: str, variable: str):
 	'''
 	Identifies if jinja variables from CSV header exist in query
 	'''
@@ -36,7 +37,7 @@ def get_variable_type(query_data, variable):
 	except:
 		return False
 
-def get_csv_row_count(csv_input, delimiter):
+def get_csv_row_count(csv_input, delimiter: str) -> int:
 	'''
 	Return to total number of rows in the CSV (minus header)
 	'''
@@ -49,7 +50,7 @@ def get_csv_row_count(csv_input, delimiter):
 
 	return csv_line_count
 
-def get_variables(csv_input, delimiter):
+def get_variables(csv_input, delimiter: str) -> [str]:
 	'''
 	Return the variable names from the header of CSV
 	'''
@@ -61,7 +62,7 @@ def get_variables(csv_input, delimiter):
 			break
 	return list_of_column_names
 
-def parse_data_response(response, raw_data, data_results, inputs, verbose=False, variables_list=None):
+def parse_data_response(response, raw_data, data_results, inputs, verbose: bool = False, variables_list=None) -> Tuple:
 	'''
 	Packages the responses from the batched queries and returns both raw and formated data
 	'''
@@ -96,7 +97,7 @@ def parse_data_response(response, raw_data, data_results, inputs, verbose=False,
 
 	return (raw_data, data_results)
 
-def parse_error_response(response, raw_errors, error_results, inputs, verbose=False, variables_list=None):
+def parse_error_response(response, raw_errors, error_results, inputs, verbose: bool = False, variables_list=None) -> Tuple:
 	'''
 	Packages the responses from the batched queries and returns both raw and formated errors
 	'''

@@ -7,7 +7,7 @@ from lib.parser import get_variable_type
 
 requests.packages.urllib3.disable_warnings()
 
-def verify_url(url):
+def verify_url(url: str) -> bool:
 	'''
 	Verifies that the GraphQL endpoint url is valid by running a simple test
 	'''
@@ -41,7 +41,7 @@ def verify_url(url):
 		return False
 
 
-def verify_query(query, query_format='File'):
+def verify_query(query: str, query_format: str = 'File') -> bool:
 	'''
 	Checks whether or not a GraphQL query is formatted correctly
 	'''
@@ -62,7 +62,7 @@ def verify_query(query, query_format='File'):
 	return True
 
 
-def verify_inputs(query, csv_input, delimiter):
+def verify_inputs(query, csv_input, delimiter: str) -> bool:
 	'''
 	Validates CSV inputs to ensure they match payload jinja variables
 	'''

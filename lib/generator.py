@@ -7,33 +7,33 @@ from lib.validations import verify_query
 from lib.helpers import print_output
 
 
-def stringify(text):
+def stringify(text: str) -> str:
     '''
 	Custom jinja filter used to wrap strings
     '''
     return '"{}"'.format(text)
 
-def intify(text):
+def intify(text: str) -> int:
     '''
 	Custom jinja filter used to assign integers
     '''
     return int(text)
 
 
-def floatify(text):
+def floatify(text: str) -> float:
     '''
 	Custom jinja filter used to assign floats
     '''
     return float(text)
 
-def generate_payload(batch_operations, root_type):
+def generate_payload(batch_operations: str, root_type: str) -> str:
 	'''
 	Takes the total batch of alias operations and wraps it with the original root type
 	'''
 	operation_body = indent(batch_operations, 4)
 	return root_type  + operation_body + '\n}'
 
-def send_payload(url, payload, batches_sent, total_requests_to_send, verbose=False):
+def send_payload(url: str, payload: str, batches_sent: int, total_requests_to_send: int, verbose: bool = False):
 	'''
 	Sends a packaged GraphQL query with populated payload in a single batch request
 	'''
